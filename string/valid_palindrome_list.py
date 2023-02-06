@@ -1,3 +1,4 @@
+# 125
 def isPalindrome(self, s: str) -> bool:
   strs = []
   for char in s:

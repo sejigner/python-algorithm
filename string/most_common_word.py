@@ -1,4 +1,5 @@
-import collections
+# 819
+
 def mostCommonWord(self, paragraph: str, banned: list[str]) -> str:
   words = [word for word in re.sub(r'[^\w]',' ', paragraph).lower().split() if word not in banned] # r : raw string 입력한 문자열 그대로 인식
   

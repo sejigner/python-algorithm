@@ -1,4 +1,4 @@
-import re
+# 125
 def isPalindrome(self, s: str) -> bool:
   s = s.lower()
   # filter through regex

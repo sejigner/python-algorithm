@@ -1,3 +1,4 @@
+# 49
 def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
   anagrams = collections.defaultdict(list)
 

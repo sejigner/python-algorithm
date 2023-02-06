@@ -1,4 +1,4 @@
-import collections
+# 125
 def isPalindrome(self, s: str) -> bool:
   # declare data type deque
   strs: Deque = collections.deque()
