@@ -27,10 +27,10 @@ class MaxHeap:
     def right(self, idx):
         return (idx << 1) + 1
     
-    def push(self, item):
+    def push(self, num):
         if self.is_full():
             raise IndexError("the heap is full")
-        
+        item = Element(num)
         self.heapsize += 1
         cur_idx = self.heapsize
 
@@ -78,12 +78,12 @@ if __name__ == "__main__":
     
     h = MaxHeap()
 
-    h.push(Element(2))
-    h.push(Element(14))
-    h.push(Element(9))
-    h.push(Element(11))
-    h.push(Element(6))
-    h.push(Element(8))
+    h.push(2)
+    h.push(14)
+    h.push(9)
+    h.push(11)
+    h.push(6)
+    h.push(8)
 
     print_heap(h)
 
