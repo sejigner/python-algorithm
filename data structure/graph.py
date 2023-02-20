@@ -4,6 +4,7 @@ class Graph:
         self.adj_list = []
         self.vtx_num = 0
         # 정점이 있으면 True, 없으면 False
+        # 정점이 삭제되어도 실제로 데이터를 지우지 않고, vtx_arr 배열 내 해당 데이터의 값을 False 처리해서 비활성화
         self.vtx_arr = []
 
         if vertex_num:
@@ -17,6 +18,7 @@ class Graph:
             return True
         return False
     
+    # 정점 추가
     def add_vertex(self):
         for i in range(len(self.vtx_arr)):
             # vtx_arr[i] 값이 False면 삭제된 정점
@@ -43,6 +45,7 @@ class Graph:
                 for vertex in adj:
                     if vertex == v:
                         adj.remove(vertex)
+
     def add_edge(self, u, v):
         self.adj_list[u].append(v)
         self.adj_list[v].append(u)
