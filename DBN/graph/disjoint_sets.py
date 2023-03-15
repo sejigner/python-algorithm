@@ -1,7 +1,18 @@
 def find_parent(parent, x):
+    # 부모 노드일 경우 값과 인덱스가 동일
+    # 부모 노드가 아니라면 부모 노드 탐색
     if parent[x] != x:
         return find_parent(parent, parent[x])
+    # 부모 노드의 인덱스 반환
     return x
+
+'''
+경로 압축 기법
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+'''
 
 def union_parent(parent, a, b):
     a = find_parent(parent, a)
