@@ -1,80 +1,56 @@
-def solution():
-    board_size = int(input())
-    board = [[0] * board_size for _ in range(board_size)]
-    apple = int(input())
-    for i in range(apple):
+board_size = int(input())
+apple = int(input())
+ # 인덱스를 1부터 하기 위해 받은 사이즈보다 1 크게 맵을 설정
+board = [[0] * (board_size + 1) for _ in range(board_size + 1)]
+info = []  # 방향 회전 정보
+for _ in range(apple):  # 2: 사과 있는 곳
         n, m = map(int, input().split())
         board[n][m] = 2
-    rotation_times = int(input())
-    movement = [0] * 101
-    second = 0
 
-    for i in range(rotation_times):
-        i, direction = input().split()
-        movement[int(i)] = direction
+rotation_times = int(input())
+for i in range(rotation_times):
+    i, direction = input().split()
+    info.append(int(i), direction)
 
-    for i in range(board_size):
-        board[0][i] = 1
-        board[board_size-1][i] = 1
-        board[i][0] = 1
-        board[i][board_size-1] = 1
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0]
 
-    board[1][1] = 1
-    x, y = 1, 1  # x행, y열
-    direction = 1  # 동0 남1 서2 북3
-    for i in range(board_size):
-        for j in range(board_size):
-            print(board[i][j], end= ' ')
-        print()
+def turn(direction, c):
+    if c == 'L':
+        direction = (direction - 1) % 4
+    else:
+        direction = (direction + 1) % 4
+    return direction
+
+def simulate():
+    x, y = 1, 1
+    board[x][y] = 1  # 1: 뱀이 위치한 곳
+    direction = 0
+    time = 0
+    index = 0  # 다음에 회전할 정보
+    q = [(x, y)]  # 뱀이 차지하고 있는 위치 정보(꼬리가 앞쪽)
     while True:
-        second += 1
-        if movement[second] == 0:
-            if direction == 0:
-                if board[x][y + 1] == 1:
-                    return second
-                elif board[x][y + 1] == 2:
-                    board[x][y] = 1
-                    board[x][y + 1] = 1
-                else:
-                    board[x][y] = 0
-                    board[x][y + 1] = 1
-                y += 1
-            if direction == 1:
-                if board[x + 1][y] == 1:
-                    return second
-                elif board[x + 1][y] == 2:
-                    board[x][y] = 1
-                    board[x + 1][y] = 1
-                else:
-                    board[x][y] = 0
-                    board[x + 1][y] = 1
-                x += 1
-            if direction == 2:
-                if board[x][y - 1] == 1:
-                    return second
-                elif board[x][y - 1] == 2:
-                    board[x][y] = 1
-                    board[x][y - 1] = 1
-                else:
-                    board[x][y] = 0
-                    board[x][y - 1] = 1
-                y -= 1
-            else:
-                if board[x - 1][y] == 1:
-                    return second
-                elif board[x - 1][y] == 2:
-                    board[x][y] = 1
-                    board[x - 1][y] = 1
-                else:
-                    board[x][y] = 0
-                    board[x - 1][y] = 1
-                x -= 1
+        nx = x + dx[direction]
+        ny = y + dy[direction]
 
-        elif movement[second] == 'L':
-            direction = (direction + 1) % 4
+        # 벽에 부딪히지 않고, 뱀의 몸통과 부딪히지 않는다면
+        if 1 <= nx and nx <= board_size and 1 <= ny and ny <= board_size and board[nx][ny] != 1:
+            if board[nx][ny] == 0:  # 사과가 없다면
+                board[nx][ny] = 1  # 단순 이동
+                q.append((nx, ny))
+                px, py = q.pop(0)  # 꼬리 제거
+                board[px][py] = 0
+            elif board[nx][ny] == 2:  # 사과가 있다면
+                board[nx][ny] = 1
+                q.append((nx, ny))
+        else:  # 벽 또는 몸통과 부딪혔다면
+            time += 1
+            break
+        x, y = nx, ny  # 다음 위치로 머리 이동
+        time += 1
+        if index < 1 and time == info[index][0]:  # 회전할 때면 회전
+            direction = turn(direction, info[index][1])
+            index += 1
+    return time
 
-        else:
-            direction = (direction + 3) % 4
-
-
-print(solution())
+print(simulate())
