@@ -18,9 +18,12 @@ def dijkstra(start):
     distance[start] = 0
     while q: # 큐가 비어있지 않다면
         dist, now = heapq.heappop(q)
-
+        # distance[now]는 모든 최단거리 정보가 저장된 배열
+        # dist는 이전 노드에서 해당 노드까지의 거리
+        # 비교 대상 노드가 이미 방문된 적 있다면
         if distance[now] < dist:
             continue
+        # 해당 노드가 아직 방문된 적이 없다면
         for i in graph[now]:
             cost = dist + i[1]
             if cost < distance[i[0]]:
