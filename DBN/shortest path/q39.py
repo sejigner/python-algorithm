@@ -17,7 +17,6 @@ for _ in range(t):
         
 
     def dijkstra():
-        print(graph)
         q = [(graph[0][0], 0, 0)]
         distance[0][0] = graph[0][0]
 
